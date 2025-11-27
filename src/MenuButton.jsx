@@ -38,6 +38,7 @@ export default function MenuButton() {
           <Link to="/about" onClick={() => setOpen(false)} style={{ color: "white" }}>About</Link>
           <Link to="/services" onClick={() => setOpen(false)} style={{ color: "white" }}>Services</Link>
           <Link to="/contact" onClick={() => setOpen(false)} style={{ color: "white" }}>Contact</Link>
+          <Link to="/weather" onClick={() => setOpen(false)} style={{ color: "withe" }}>Weather</Link>
         </div>
       )}
     </div>

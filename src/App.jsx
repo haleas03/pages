@@ -1,10 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MenuButton from "./MenuButton";
+import Weather from "./Pages/Weather";
 
 import Home from "./Pages/Home";
 import About from "./Pages/About";
 import Services from "./Pages/Services";
 import Contact from "./Pages/Contact";
+
+<Route path="/weather" element={<Weather />} />
 
 export default function App() {
   return (
@@ -17,6 +20,7 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/weather" element={<Weather />} />
         </Routes>
       </div>
     </BrowserRouter>
