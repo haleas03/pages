@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
+import Skeleton from "@/components/ui/Skeleton";
 
 const Weather = () => {
   const [weather, setWeather] = useState(null);
@@ -7,12 +7,7 @@ const Weather = () => {
   useEffect(() => {
     fetch("https://wttr.in/Guatemala?format=j1")
       .then((res) => res.json())
-      .then((data) => {
-
-        setTimeout(() => {
-          setWeather(data);
-        }, 800);
-      })
+      .then((data) => setWeather(data))
       .catch((err) => console.error(err));
   }, []);
 
