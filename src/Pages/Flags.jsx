@@ -16,8 +16,8 @@ const Flags = () => {
       <h1 className="text-2xl font-semibold mb-4">Flags jaja</h1>
 
       {countries ? (
-        <div className="grid grid-cols-6 gap-6">
-          {countries.slice(0, 30).map((country) => (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-6 w-full">
+          {countries.slice(0, 100).map((country) => (
             <div key={country.cca3} className="mb-4">
               <img
                 src={country.flags?.png}
