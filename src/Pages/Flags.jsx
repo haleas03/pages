@@ -4,6 +4,7 @@ import Skeleton from "@/components/ui/Skeleton";
 const Flags = () => {
   const [countries, setCountries] = useState(null);
   const [search, setSearch] = useState(""); 
+  const [sortOrder, setSortOrder] = useState("asc");
 
   useEffect(() => {
     fetch("https://restcountries.com/v3.1/all?fields=name,capital,cca3,flags")
@@ -14,7 +15,18 @@ const Flags = () => {
 
   const filteredCountries = countries?.filter((country) =>
     country.name?.common.toLowerCase().includes(search.toLowerCase())
-  );
+  )
+
+  .sort((a, b) => {
+    const nameA = a.name.common.toLowerCase();
+    const nameB = b.name.common.toLowerCase();
+
+    if (sortOrder === "asc") {
+      return nameA.localeCompare(nameB); 
+    }else {
+      return nameB.localeCompare(nameA);
+    }
+  })
 
   return (
     <div className="p-6 w-full text-white">
@@ -28,6 +40,24 @@ const Flags = () => {
           onChange={(eventsearch) => setSearch(eventsearch.target.value)}
           className="px-4 py-2 w-64 rounded-lg bg-white/20 backdrop-blur text-white placeholder-gray-300 outline-none focus:ring-2 focus:ring-blue-400"
         />
+      </div>
+
+      <div className="flex justify-center gap-3 mb-6">
+        <button 
+        onClick={() => setSortOrder("asc")}
+        className={`px-4 py-1 rounded-full text-sm ${
+          sortOrder === "asc"
+          ? "bg-blue=500"
+          : "bg-white/20 hover:bg- white/30"
+          }`} >A - Z  </button>
+
+          <button
+          onClick={() => setSortOrder("desc")}
+          className={`px-4 py-1 rounded-full text-sm ${
+            sortOrder === "desc"
+            ? "bg-blue-500"
+            : "bg-white/20 hover:bg-white/30"
+             }`}>Z - A </button>
       </div>
 
       {countries ? (
