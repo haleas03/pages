@@ -3,6 +3,7 @@ import Skeleton from "@/components/ui/Skeleton";
 
 const Flags = () => {
   const [countries, setCountries] = useState(null);
+  const [search, setSearch] = useState(""); 
 
   useEffect(() => {
     fetch("https://restcountries.com/v3.1/all?fields=name,capital,cca3,flags")
@@ -11,44 +12,64 @@ const Flags = () => {
       .catch((err) => console.error(err));
   }, []);
 
+  const filteredCountries = countries?.filter((country) =>
+    country.name?.common.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
-    <div className="p-6 w-full bg-white/10 backdrop-blur-md rounded-xl shadow-lg text-white">
-      <h1 className="text-2xl font-semibold mb-4">Flags jaja</h1>
+    <div className="p-6 w-full text-white">
+      <h1 className="text-2xl font-semibold mb-6 text-center">Flags jaja</h1>
+
+      <div className="flex justify-center mb-6">
+        <input
+          type="text"
+          placeholder="Search country..."
+          value={search}
+          onChange={(eventsearch) => setSearch(eventsearch.target.value)}
+          className="px-4 py-2 w-64 rounded-lg bg-white/20 backdrop-blur text-white placeholder-gray-300 outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </div>
 
       {countries ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-6 w-full">
-          {countries.slice(0, 100).map((country) => (
-            <div key={country.cca3} className="mb-4">
-              <img
-                src={country.flags?.png}
-                alt={country.name?.common}
-                className="w-32 h-20 object-cover rounded-md shadow mx-auto"
-              />
-              <p className="mt-2 text-center text-lg font-semibold">
-                {country.name?.common}
-              </p>
-              <p className="text-center text-sm opacity-90">
-                <span className="font-medium">Nombre oficial:</span>{" "}
-                {country.name?.official}
-              </p>
+          {filteredCountries.length > 0 ? (
+            filteredCountries.map((country) => (
+              <div key={country.cca3} className="text-center">
+                <img
+                  src={country.flags?.png}
+                  alt={country.name?.common}
+                  className="w-20 h-14 object-cover rounded-md shadow mx-auto"
+                />
 
-              <p className="text-center text-sm opacity-90">
-                <span className="font-medium">Capital:</span>{" "}
-                {country.capital?.[0] ?? "No tiene"}
-              </p>
-            </div>
-          ))}
+                <p className="mt-2 text-sm font-semibold">
+                  {country.name?.common}
+                </p>
+
+                <p className="text-xs opacity-90">
+                  <span className="font-medium">Oficial:</span>{" "}
+                  {country.name?.official}
+                </p>
+
+                <p className="text-xs opacity-90">
+                  <span className="font-medium">Capital:</span>{" "}
+                  {country.capital?.[0] ?? "—"}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p className="col-span-full text-center text-gray-300">
+              No se encuentra el pais seleccionado 
+            </p>
+          )}
         </div>
       ) : (
-        <div>
-          <Skeleton width={128} height={80} />
-          <Skeleton width={100} style={{ marginTop: "10px" }} />
-
-          <Skeleton width={128} height={80} style={{ marginTop: "20px" }} />
-          <Skeleton width={100} style={{ marginTop: "10px" }} />
-
-          <Skeleton width={128} height={80} style={{ marginTop: "20px" }} />
-          <Skeleton width={100} style={{ marginTop: "10px" }} />
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-6 w-full">
+          {[...Array(24)].map((_, i) => (
+            <div key={i} className="text-center">
+              <Skeleton width={80} height={50} />
+              <Skeleton width={70} style={{ marginTop: "10px" }} />
+            </div>
+          ))}
         </div>
       )}
     </div>
@@ -56,4 +77,3 @@ const Flags = () => {
 };
 
 export default Flags;
-
