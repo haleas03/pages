@@ -14,18 +14,22 @@ const Flags = () => {
       .catch((err) => console.error(err));
   }, []);
 
-  const filteredCountries = countries?.filter((country) =>
-    country.name?.common.toLowerCase().includes(search.toLowerCase())
-  )
+const filteredCountries = countries
+  ?.filter((country) => {
+    const name = country.name?.common.toLowerCase();
+    const capital = country.capital?.[0]?.toLowerCase() || "";
+    const term = search.toLowerCase();
 
-    .sort((a, b) => {
-      const nameA = a.name.common.toLowerCase();
-      const nameB = b.name.common.toLowerCase();
+    return name.includes(term) || capital.includes(term);
+  })
+  .sort((a, b) => {
+    const nameA = a.name.common.toLowerCase();
+    const nameB = b.name.common.toLowerCase();
 
-      return sortOrder === "asc"
-        ? nameA.localeCompare(nameB)
-        : nameB.localeCompare(nameA);
-    }) || [];
+    return sortOrder === "asc"
+      ? nameA.localeCompare(nameB)
+      : nameB.localeCompare(nameA);
+  }) || [];
 
   return (
     <div className="p-6 w-full text-white">
