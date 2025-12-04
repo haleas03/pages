@@ -1,4 +1,9 @@
-const Skeleton = ({ height = 5, width = 20 }) =>
-  <div className={`animate-pulse rounded-md bg-gray-300 my-1 h-${height} w-${width}`} />
+const Skeleton = ({ height = 20, width = 80 }) => (
+  <div
+    className="animate-pulse rounded-md bg-gray-300 my-1"
+    style={{ height, width }}
+  />
+);
 
-export default Skeleton
+export default Skeleton;
+
