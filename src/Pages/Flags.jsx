@@ -18,9 +18,9 @@ const filteredCountries = countries
   ?.filter((country) => {
     const name = country.name?.common.toLowerCase();
     const capital = country.capital?.[0]?.toLowerCase() || "";
-    const term = search.toLowerCase();
+    const busqueda = search.toLowerCase();
 
-    return name.includes(term) || capital.includes(term);
+    return name.includes(busqueda) || capital.includes(busqueda);
   })
   .sort((a, b) => {
     const nameA = a.name.common.toLowerCase();
